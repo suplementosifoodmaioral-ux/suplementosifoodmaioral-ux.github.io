@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DX FRETES - Autorização Melhor Envio</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .box {
+            width: 90%;
+            max-width: 600px;
+            background: #1d1d1d;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 35px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #e30613;
+        }
+
+        .sucesso {
+            color: #45d483;
+            font-weight: bold;
+        }
+
+        .codigo {
+            background: #292929;
+            padding: 15px;
+            border-radius: 8px;
+            word-break: break-all;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+
+        button {
+            background: #e30613;
+            color: white;
+            border: 0;
+            border-radius: 7px;
+            padding: 12px 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .erro {
+            color: #ff6666;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h1>DX FRETES</h1>
+
+    <div id="resultado">
+        Processando autorização do Melhor Envio...
+    </div>
+</div>
+
+<script>
+    const parametros = new URLSearchParams(window.location.search);
+
+    const codigo = parametros.get("code");
+    const erro = parametros.get("error");
+
+    const resultado = document.getElementById("resultado");
+
+    if (codigo) {
+
+        resultado.innerHTML = `
+            <p class="sucesso">
+                ✓ Melhor Envio autorizado com sucesso!
+            </p>
+
+            <p>
+                O código de autorização foi recebido.
+            </p>
+
+            <div class="codigo" id="codigo">${codigo}</div>
+
+            <button onclick="copiarCodigo()">
+                COPIAR CÓDIGO
+            </button>
+
+            <p>
+                Você já pode retornar ao DX FRETES.
+            </p>
+        `;
+
+    } else if (erro) {
+
+        resultado.innerHTML = `
+            <p class="erro">
+                Não foi possível autorizar o Melhor Envio.
+            </p>
+
+            <p>${erro}</p>
+        `;
+
+    } else {
+
+        resultado.innerHTML = `
+            <p>
+                Página de integração do DX FRETES com o Melhor Envio.
+            </p>
+
+            <p>
+                Nenhuma autorização está sendo processada neste momento.
+            </p>
+        `;
+    }
+
+    function copiarCodigo() {
+        navigator.clipboard.writeText(codigo);
+        alert("Código copiado.");
+    }
+</script>
+
+</body>
+</html>
